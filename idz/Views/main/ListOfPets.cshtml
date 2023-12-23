@@ -1,0 +1,62 @@
+﻿@model List<idz.Models.Entities.Pets>
+
+
+@{
+    ViewBag.Title = "ListOfPets";
+}
+
+<h2>Список питомцев в зоо-гостинице</h2>
+
+@Html.ActionLink("Добавить питомца в базу гостиницы","CreatePet", "idz", new { @class = "btn btn-default" })
+
+@*лямба функция*@
+@{
+    Func<long?, string> formatAge = (age) =>
+    {
+        if (age == 1)
+            return age + " год";
+        else if (age >= 2 && age <= 4)
+            return age + " года";
+        else
+            return age + " лет";
+    };
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Тип животного</th>
+            <th class="text-center">Имя</th>
+            <th class="text-center">Возраст</th>
+            <th class="text-center">Дополнительная информация</th>
+            <th class="text-center">Действия</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pet in Model)
+        {
+        <tr class="text-center">
+            <td>@pet.Type</td>
+            <td>@pet.Name </td>
+            <td>@formatAge(pet.Age) </td>
+            <td>@pet.Additional_Info</td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Редактировать", "EditPet", "main", new { petID = pet.Pet_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Удалить", "DeletePet", "main", new { petID = pet.Pet_ID }, new { @class = "btn btn-danger" })
+                </td>
+            }
+            
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Перейти к клиентам", "ListOfClients", "idz", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Перейти к логам", "CareLogsList", "idz", new { @class = "btn btn-primary" })
+
+    </div>
+</div>

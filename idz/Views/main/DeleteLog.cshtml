@@ -1,0 +1,49 @@
+﻿@model idz.Models.Entities.CareLogs
+
+@{
+    ViewBag.Title = "DeleteLog";
+}
+
+<div class="container">
+    <h2 class="text-center">Удаление логов</h2>
+    <h3 class="text-center text-danger">Вы уверены, что хотите удалить этот лог?</h3>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="text-center">Журнал ухода</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Time)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Time)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CareTypes.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.CareTypes.Name)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Employees.Surname)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Employees.Surname)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Employees.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Employees.Name)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Employees.Patronymic)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Employees.Patronymic)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Pets.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Pets.Name)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Pets.Type)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Pets.Type)</dd>
+            </dl>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color text-center mt-3">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Список логов", "CareLogsList", null, new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>

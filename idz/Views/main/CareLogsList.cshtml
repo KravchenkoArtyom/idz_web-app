@@ -1,0 +1,50 @@
+﻿@model List<idz.Models.Entities.CareLogs>
+
+
+@{
+    ViewBag.Title = "CareLogs";
+}
+
+<h2>Список логов</h2>
+@Html.ActionLink("Добавить новый лог", "CreateCareLog", "idz", new { @class = "btn btn-default" })
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Питомец</th>
+            <th class="text-center">Услуга</th>
+            <th class="text-center">Работник</th>
+            <th class="text-center">Дата и время</th>
+            <th class="text-center">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+        
+        <tr class="text-center">
+
+            <td>@log.Pets.Name  @log.Pets.Type  @log.Pets.Additional_Info @log.Pets.Age</td>
+            <td>@log.CareTypes.Name @log.CareTypes.Description</td>
+            <td>@log.Employees.Surname @log.Employees.Name @log.Employees.Patronymic @log.Employees.Number </td>
+            <td>@log.Time</td>
+            @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Employee")))
+            {
+
+                <td>
+                    @Html.ActionLink("Редактировать", "EditLog", "main", new { careLogID = log.CareLog_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Удалить", "DeleteLog", "main", new { careLogID = log.CareLog_ID }, new { @class = "btn btn-danger" })
+                </td>
+            }
+            
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Перейти к клиентам", "ListOfClients", "idz", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Перейти к питомцам", "ListOfPets", "idz", new { @class = "btn btn-primary" })
+
+    </div>
+</div>

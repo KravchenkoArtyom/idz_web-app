@@ -1,0 +1,65 @@
+﻿@model idz.Models.ViewModels.CreateCareLogVM
+
+@{
+    ViewBag.Title = "Create Care Log";
+}
+
+<h2>Create CareLog</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            @Html.ValidationSummary(true, "Тип услуги не соответсвует работнику \n Пожалуйста, выберите другого работника или услугу", new { @class = "form-control" })
+
+            <div class="form-group">
+                <label for="Time">Время</label>
+                <input type="datetime-local" id="Time" name="Time" class="form-control">
+                <span id="TimeError" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+            @Html.LabelFor(model => model.Pet_ID)
+            @Html.DropDownListFor(model => model.Pet_ID, Model.PetsList, "Выберите питомца", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Pet_ID, "", new { @class = "text-danger" })
+             </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CareType_ID)
+                @Html.DropDownListFor(model => model.CareType_ID, Model.CareTypesList, "Выберите услугу", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CareType_ID, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Employee_ID)
+                @Html.DropDownListFor(model => model.Employee_ID, Model.EmployeesList, "Выберите работника", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Employee_ID, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                @Html.ActionLink("Back to List", "CareLogsList", null, new { @class = "btn btn-default btn-block" })
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script>
+    document.getElementById('Time').addEventListener('change', function (e) {
+        var input = e.target;
+        var datetime = new Date(input.value);
+
+        if (isNaN(datetime.getTime())) {
+            // Введенная дата и время недействительны
+            document.getElementById('TimeError').textContent = 'Пожалуйста, введите действительную дату и время.';
+        } else {
+            // Введенная дата и время действительны
+            document.getElementById('TimeError').textContent = '';
+        }
+    });
+</script>

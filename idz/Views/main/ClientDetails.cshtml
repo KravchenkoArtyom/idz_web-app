@@ -1,0 +1,28 @@
+﻿@model idz.Models.ViewModels.ClientDetails
+
+@{
+    ViewBag.Title = "Client Details";
+}
+
+<h2>Детали клиента и список номеров</h2>
+
+<div>
+    <h3>Клиент: @Model.Client.Surname @Model.Client.Name @Model.Client.Patronymic</h3>
+    <h4>Контактный номер: @Model.Client.Number</h4>
+
+    <h3>Номера комнат(история):</h3>
+    <ul>
+        @foreach (var roomBooking in Model.RoomBookings)
+        {
+            <li>@roomBooking.RoomNumber (с @roomBooking.BookingStartDate по @roomBooking.BookingEndDate)</li>
+        }
+    </ul>
+
+    <h3>Животные:</h3>
+    <ul>
+        @foreach (var pet in Model.Pets)
+        {
+            <li>@Html.ActionLink(pet.PetName + " - Дополнительная информация: " + pet.PetAdditionalInfo, "PetDetails", "main", new { petID = pet.PetID }, null)</li>
+        }
+    </ul>
+</div>

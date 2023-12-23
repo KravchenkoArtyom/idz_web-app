@@ -1,0 +1,45 @@
+﻿@model List<idz.Models.Entities.Clients>
+
+@{
+    ViewBag.Title = "ListOfClients";
+}
+
+<h2>Список клиентов зоо-гостиницы</h2>
+@Html.ActionLink("Добавить клиента в базу гостиницы", "CreateClient", "idz", new { @class = "btn btn-default" })
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Имя</th>
+            <th class="text-center">Номер телефона</th>
+            <th class="text-center">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+        <tr class="text-center">
+            <td>@Html.ActionLink($"{@client.Surname} {@client.Name}  {@client.Patronymic}", "ClientDetails", "main", new { clientID = client.Client_ID }, null)</td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <td>@client.Number</td>
+                <td>
+
+                    @Html.ActionLink("Редактировать", "EditClient", "main", new { clientID = client.Client_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Удалить", "DeleteClient", "main", new { clientID = client.Client_ID }, new { @class = "btn btn-danger" })
+
+
+                </td>
+            }
+
+            
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Перейти к питомцам", "ListOfPets", "idz", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Перейти к логам", "CareLogsList", "idz", new { @class = "btn btn-primary" })
+    </div>
+</div>

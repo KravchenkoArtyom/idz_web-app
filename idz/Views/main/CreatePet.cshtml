@@ -1,0 +1,52 @@
+﻿@model idz.Models.ViewModels.CreatePetVM
+
+@{
+    ViewBag.Title = "Create Pet";
+}
+
+<h2>Create Pet</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name)
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type)
+                @Html.TextBoxFor(model => model.Type, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Age)
+                @Html.TextBoxFor(model => model.Age, new { @class = "form-control", type = "number", min = "0" })
+                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Additional_Info)
+                @Html.TextBoxFor(model => model.Additional_Info, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Additional_Info, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Client_ID)
+                @Html.DropDownListFor(model => model.Client_ID, Model.ClientsList, "Выберите клиента", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Client_ID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+                @Html.ActionLink("Перейти к питомцам", "ListOfPets", null, new { @class = "btn btn-default btn-block" })
+
+            </div>
+        </div>
+    </div>
+}

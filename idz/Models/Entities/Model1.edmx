@@ -1,0 +1,809 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище I11KravchenkoAAIDZv3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bookings">
+          <Key>
+            <PropertyRef Name="Booking_ID" />
+          </Key>
+          <Property Name="Booking_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date_Start" Type="date" Nullable="false" />
+          <Property Name="Date_End" Type="date" Nullable="false" />
+          <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Room_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CareLogs">
+          <Key>
+            <PropertyRef Name="CareLog_ID" />
+          </Key>
+          <Property Name="CareLog_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CareType_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CareTypes">
+          <Key>
+            <PropertyRef Name="CareType_ID" />
+          </Key>
+          <Property Name="CareType_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+          <Property Name="Price" Type="bigint" Nullable="false" />
+          <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="30" />
+          <Property Name="Number" Type="bigint" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="50" />
+          <Property Name="Number" Type="bigint" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Payment_ID" />
+          </Key>
+          <Property Name="Payment_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="bigint" Nullable="false" />
+          <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pets">
+          <Key>
+            <PropertyRef Name="Pet_ID" />
+          </Key>
+          <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="bigint" />
+          <Property Name="Additional_Info" Type="varchar" MaxLength="100" />
+          <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="Position_ID" />
+          </Key>
+          <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positions_Employees">
+          <Key>
+            <PropertyRef Name="Position_Employee_ID" />
+          </Key>
+          <Property Name="Position_Employee_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="Room_ID" />
+          </Key>
+          <Property Name="Room_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Number" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Price" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="CareTypes_CareLogs">
+          <End Role="CareTypes" Type="Self.CareTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareTypes">
+              <PropertyRef Name="CareType_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="CareType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Clients_Pets">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Pets" Type="Self.Pets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Pets">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Clients-Payment">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employees_CareLogs">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employees-Position_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Positions_Employees" Type="Self.Positions_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Positions_Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pets_CareLogs">
+          <End Role="Pets" Type="Self.Pets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pets">
+              <PropertyRef Name="Pet_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="Pet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pets-Booking">
+          <End Role="Pets" Type="Self.Pets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pets">
+              <PropertyRef Name="Pet_ID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Pet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Positions_CareTypes">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="CareTypes" Type="Self.CareTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="CareTypes">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Positions-Positions_Employee">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Positions_Employees" Type="Self.Positions_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="Positions_Employees">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Rooms-Booking">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="Room_ID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Room_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище I11KravchenkoAAIDZv3ModelContainer">
+          <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CareLogs" EntityType="Self.CareLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CareTypes" EntityType="Self.CareTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pets" EntityType="Self.Pets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions_Employees" EntityType="Self.Positions_Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="CareTypes_CareLogs" Association="Self.CareTypes_CareLogs">
+            <End Role="CareTypes" EntitySet="CareTypes" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Clients_Pets" Association="Self.Clients_Pets">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Pets" EntitySet="Pets" />
+          </AssociationSet>
+          <AssociationSet Name="Clients-Payment" Association="Self.Clients-Payment">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="Employees_CareLogs" Association="Self.Employees_CareLogs">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Employees-Position_Employee" Association="Self.Employees-Position_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="Pets_CareLogs" Association="Self.Pets_CareLogs">
+            <End Role="Pets" EntitySet="Pets" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Pets-Booking" Association="Self.Pets-Booking">
+            <End Role="Pets" EntitySet="Pets" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="Positions_CareTypes" Association="Self.Positions_CareTypes">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="CareTypes" EntitySet="CareTypes" />
+          </AssociationSet>
+          <AssociationSet Name="Positions-Positions_Employee" Association="Self.Positions-Positions_Employee">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Rooms-Booking" Association="Self.Rooms-Booking">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="I11KravchenkoAAIDZv3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bookings">
+          <Key>
+            <PropertyRef Name="Booking_ID" />
+          </Key>
+          <Property Name="Booking_ID" Type="Guid" Nullable="false" />
+          <Property Name="Date_Start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_End" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Pet_ID" Type="Guid" Nullable="false" />
+          <Property Name="Room_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Pets" Relationship="Self.Pets_Booking" FromRole="Bookings" ToRole="Pets" />
+          <NavigationProperty Name="Rooms" Relationship="Self.Rooms_Booking" FromRole="Bookings" ToRole="Rooms" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int64" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pets" Relationship="Self.Clients_Pets" FromRole="Clients" ToRole="Pets" />
+          <NavigationProperty Name="Payments" Relationship="Self.Clients_Payment" FromRole="Clients" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="Payment_ID" />
+          </Key>
+          <Property Name="Payment_ID" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Int64" Nullable="false" />
+          <Property Name="Client_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.Clients_Payment" FromRole="Payments" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="Pets">
+          <Key>
+            <PropertyRef Name="Pet_ID" />
+          </Key>
+          <Property Name="Pet_ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Age" Type="Int64" />
+          <Property Name="Additional_Info" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Client_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.Pets_Booking" FromRole="Pets" ToRole="Bookings" />
+          <NavigationProperty Name="Clients" Relationship="Self.Clients_Pets" FromRole="Pets" ToRole="Clients" />
+          <NavigationProperty Name="CareLogs" Relationship="I11KravchenkoAAIDZv3Model.Pets_CareLogs" FromRole="Pets" ToRole="CareLogs" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="Room_ID" />
+          </Key>
+          <Property Name="Room_ID" Type="Guid" Nullable="false" />
+          <Property Name="Number" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.Rooms_Booking" FromRole="Rooms" ToRole="Bookings" />
+        </EntityType>
+        <Association Name="Pets_Booking">
+          <End Role="Pets" Type="Self.Pets" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pets">
+              <PropertyRef Name="Pet_ID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Pet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Rooms_Booking">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="Room_ID" />
+            </Principal>
+            <Dependent Role="Bookings">
+              <PropertyRef Name="Room_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Clients_Pets">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Pets" Type="Self.Pets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Pets">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Clients_Payment">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookings" EntityType="Self.Bookings" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="Pets" EntityType="Self.Pets" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+          <AssociationSet Name="Pets_Booking" Association="Self.Pets_Booking">
+            <End Role="Pets" EntitySet="Pets" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="Rooms_Booking" Association="Self.Rooms_Booking">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Bookings" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="Clients_Pets" Association="Self.Clients_Pets">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Pets" EntitySet="Pets" />
+          </AssociationSet>
+          <AssociationSet Name="Clients_Payment" Association="Self.Clients_Payment">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <EntitySet Name="CareLogs" EntityType="I11KravchenkoAAIDZv3Model.CareLogs" />
+          <EntitySet Name="CareTypes" EntityType="I11KravchenkoAAIDZv3Model.CareTypes" />
+          <EntitySet Name="Employees" EntityType="I11KravchenkoAAIDZv3Model.Employees" />
+          <EntitySet Name="Positions" EntityType="I11KravchenkoAAIDZv3Model.Positions" />
+          <EntitySet Name="Positions_Employees" EntityType="I11KravchenkoAAIDZv3Model.Positions_Employees" />
+          <AssociationSet Name="CareTypes_CareLogs" Association="I11KravchenkoAAIDZv3Model.CareTypes_CareLogs">
+            <End Role="CareTypes" EntitySet="CareTypes" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Employees_CareLogs" Association="I11KravchenkoAAIDZv3Model.Employees_CareLogs">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Pets_CareLogs" Association="I11KravchenkoAAIDZv3Model.Pets_CareLogs">
+            <End Role="Pets" EntitySet="Pets" />
+            <End Role="CareLogs" EntitySet="CareLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Positions_CareTypes" Association="I11KravchenkoAAIDZv3Model.Positions_CareTypes">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="CareTypes" EntitySet="CareTypes" />
+          </AssociationSet>
+          <AssociationSet Name="Employees_Position_Employee" Association="I11KravchenkoAAIDZv3Model.Employees_Position_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Positions_Positions_Employee" Association="I11KravchenkoAAIDZv3Model.Positions_Positions_Employee">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+          </AssociationSet>
+          <EntitySet Name="Role" EntityType="I11KravchenkoAAIDZv3Model.Role" />
+          <EntitySet Name="User" EntityType="I11KravchenkoAAIDZv3Model.User" />
+          <AssociationSet Name="FK_User_Role" Association="I11KravchenkoAAIDZv3Model.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CareLogs">
+          <Key>
+            <PropertyRef Name="CareLog_ID" />
+          </Key>
+          <Property Name="CareLog_ID" Type="Guid" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pet_ID" Type="Guid" Nullable="false" />
+          <Property Name="Employee_ID" Type="Guid" Nullable="false" />
+          <Property Name="CareType_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CareTypes" Relationship="I11KravchenkoAAIDZv3Model.CareTypes_CareLogs" FromRole="CareLogs" ToRole="CareTypes" />
+          <NavigationProperty Name="Employees" Relationship="I11KravchenkoAAIDZv3Model.Employees_CareLogs" FromRole="CareLogs" ToRole="Employees" />
+          <NavigationProperty Name="Pets" Relationship="I11KravchenkoAAIDZv3Model.Pets_CareLogs" FromRole="CareLogs" ToRole="Pets" />
+        </EntityType>
+        <EntityType Name="CareTypes">
+          <Key>
+            <PropertyRef Name="CareType_ID" />
+          </Key>
+          <Property Name="CareType_ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int64" Nullable="false" />
+          <Property Name="Position_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CareLogs" Relationship="I11KravchenkoAAIDZv3Model.CareTypes_CareLogs" FromRole="CareTypes" ToRole="CareLogs" />
+          <NavigationProperty Name="Positions" Relationship="I11KravchenkoAAIDZv3Model.Positions_CareTypes" FromRole="CareTypes" ToRole="Positions" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int64" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CareLogs" Relationship="I11KravchenkoAAIDZv3Model.Employees_CareLogs" FromRole="Employees" ToRole="CareLogs" />
+          <NavigationProperty Name="Positions_Employees" Relationship="I11KravchenkoAAIDZv3Model.Employees_Position_Employee" FromRole="Employees" ToRole="Positions_Employees" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="Position_ID" />
+          </Key>
+          <Property Name="Position_ID" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CareTypes" Relationship="I11KravchenkoAAIDZv3Model.Positions_CareTypes" FromRole="Positions" ToRole="CareTypes" />
+          <NavigationProperty Name="Positions_Employees" Relationship="I11KravchenkoAAIDZv3Model.Positions_Positions_Employee" FromRole="Positions" ToRole="Positions_Employees" />
+        </EntityType>
+        <EntityType Name="Positions_Employees">
+          <Key>
+            <PropertyRef Name="Position_Employee_ID" />
+          </Key>
+          <Property Name="Position_Employee_ID" Type="Guid" Nullable="false" />
+          <Property Name="Position_ID" Type="Guid" Nullable="false" />
+          <Property Name="Employee_ID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="I11KravchenkoAAIDZv3Model.Employees_Position_Employee" FromRole="Positions_Employees" ToRole="Employees" />
+          <NavigationProperty Name="Positions" Relationship="I11KravchenkoAAIDZv3Model.Positions_Positions_Employee" FromRole="Positions_Employees" ToRole="Positions" />
+        </EntityType>
+        <Association Name="CareTypes_CareLogs">
+          <End Type="I11KravchenkoAAIDZv3Model.CareTypes" Role="CareTypes" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.CareLogs" Role="CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CareTypes">
+              <PropertyRef Name="CareType_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="CareType_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employees_CareLogs">
+          <End Type="I11KravchenkoAAIDZv3Model.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.CareLogs" Role="CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Pets_CareLogs">
+          <End Type="I11KravchenkoAAIDZv3Model.Pets" Role="Pets" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.CareLogs" Role="CareLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pets">
+              <PropertyRef Name="Pet_ID" />
+            </Principal>
+            <Dependent Role="CareLogs">
+              <PropertyRef Name="Pet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Positions_CareTypes">
+          <End Type="I11KravchenkoAAIDZv3Model.Positions" Role="Positions" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.CareTypes" Role="CareTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="CareTypes">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employees_Position_Employee">
+          <End Type="I11KravchenkoAAIDZv3Model.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.Positions_Employees" Role="Positions_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Principal>
+            <Dependent Role="Positions_Employees">
+              <PropertyRef Name="Employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Positions_Positions_Employee">
+          <End Type="I11KravchenkoAAIDZv3Model.Positions" Role="Positions" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.Positions_Employees" Role="Positions_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="Positions_Employees">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="I11KravchenkoAAIDZv3Model.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="Guid" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="I11KravchenkoAAIDZv3Model.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Type="I11KravchenkoAAIDZv3Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="I11KravchenkoAAIDZv3Model.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище I11KravchenkoAAIDZv3ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Bookings">
+              <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Date_End" ColumnName="Date_End" />
+                <ScalarProperty Name="Pet_ID" ColumnName="Pet_ID" />
+                <ScalarProperty Name="Room_ID" ColumnName="Room_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pets">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Pets">
+              <MappingFragment StoreEntitySet="Pets">
+                <ScalarProperty Name="Pet_ID" ColumnName="Pet_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Additional_Info" ColumnName="Additional_Info" />
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Rooms">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="Room_ID" ColumnName="Room_ID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CareLogs">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.CareLogs">
+              <MappingFragment StoreEntitySet="CareLogs">
+                <ScalarProperty Name="CareType_ID" ColumnName="CareType_ID" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Pet_ID" ColumnName="Pet_ID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="CareLog_ID" ColumnName="CareLog_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CareTypes">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.CareTypes">
+              <MappingFragment StoreEntitySet="CareTypes">
+                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CareType_ID" ColumnName="CareType_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Positions">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions_Employees">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Positions_Employees">
+              <MappingFragment StoreEntitySet="Positions_Employees">
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+                <ScalarProperty Name="Position_Employee_ID" ColumnName="Position_Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="I11KravchenkoAAIDZv3Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,37 @@
+﻿@model idz.Models.Entities.Pets
+@{
+    ViewBag.Title = "DeletePet";
+}
+
+<h2>Удаление питомца</h2>
+
+<h3>Вы уверены, что хотите удалить этого питомца?</h3>
+<div>
+    <h4>Питомец</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Type)</dt>
+        <dd>@Html.DisplayFor(model => model.Type)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Age)</dt>
+        <dd>@Html.DisplayFor(model => model.Age)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Additional_Info)</dt>
+        <dd>@Html.DisplayFor(model => model.Additional_Info)</dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "ListOfPets")
+        </div>
+    }
+</div>

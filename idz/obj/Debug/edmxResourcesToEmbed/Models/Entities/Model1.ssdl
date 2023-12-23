@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище I11KravchenkoAAIDZv3Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bookings">
+    <Key>
+      <PropertyRef Name="Booking_ID" />
+    </Key>
+    <Property Name="Booking_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date_Start" Type="date" Nullable="false" />
+    <Property Name="Date_End" Type="date" Nullable="false" />
+    <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Room_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CareLogs">
+    <Key>
+      <PropertyRef Name="CareLog_ID" />
+    </Key>
+    <Property Name="CareLog_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CareType_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CareTypes">
+    <Key>
+      <PropertyRef Name="CareType_ID" />
+    </Key>
+    <Property Name="CareType_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="150" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+    <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Client_ID" />
+    </Key>
+    <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Patronymic" Type="varchar" MaxLength="30" />
+    <Property Name="Number" Type="bigint" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Employee_ID" />
+    </Key>
+    <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Patronymic" Type="varchar" MaxLength="50" />
+    <Property Name="Number" Type="bigint" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="Payment_ID" />
+    </Key>
+    <Property Name="Payment_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Amount" Type="bigint" Nullable="false" />
+    <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pets">
+    <Key>
+      <PropertyRef Name="Pet_ID" />
+    </Key>
+    <Property Name="Pet_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="bigint" />
+    <Property Name="Additional_Info" Type="varchar" MaxLength="100" />
+    <Property Name="Client_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Positions">
+    <Key>
+      <PropertyRef Name="Position_ID" />
+    </Key>
+    <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Positions_Employees">
+    <Key>
+      <PropertyRef Name="Position_Employee_ID" />
+    </Key>
+    <Property Name="Position_Employee_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Position_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Employee_ID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleCode" />
+    </Key>
+    <Property Name="RoleCode" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="Room_ID" />
+    </Key>
+    <Property Name="Room_ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Number" Type="bigint" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Price" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserRole" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CareTypes_CareLogs">
+    <End Role="CareTypes" Type="Self.CareTypes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CareTypes">
+        <PropertyRef Name="CareType_ID" />
+      </Principal>
+      <Dependent Role="CareLogs">
+        <PropertyRef Name="CareType_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Clients_Pets">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Pets" Type="Self.Pets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Client_ID" />
+      </Principal>
+      <Dependent Role="Pets">
+        <PropertyRef Name="Client_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Clients-Payment">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Client_ID" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="Client_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Employees_CareLogs">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Employee_ID" />
+      </Principal>
+      <Dependent Role="CareLogs">
+        <PropertyRef Name="Employee_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Employees-Position_Employee">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="Positions_Employees" Type="Self.Positions_Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Employee_ID" />
+      </Principal>
+      <Dependent Role="Positions_Employees">
+        <PropertyRef Name="Employee_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleCode" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Pets_CareLogs">
+    <End Role="Pets" Type="Self.Pets" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CareLogs" Type="Self.CareLogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pets">
+        <PropertyRef Name="Pet_ID" />
+      </Principal>
+      <Dependent Role="CareLogs">
+        <PropertyRef Name="Pet_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Pets-Booking">
+    <End Role="Pets" Type="Self.Pets" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pets">
+        <PropertyRef Name="Pet_ID" />
+      </Principal>
+      <Dependent Role="Bookings">
+        <PropertyRef Name="Pet_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Positions_CareTypes">
+    <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+    <End Role="CareTypes" Type="Self.CareTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Positions">
+        <PropertyRef Name="Position_ID" />
+      </Principal>
+      <Dependent Role="CareTypes">
+        <PropertyRef Name="Position_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Positions-Positions_Employee">
+    <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+    <End Role="Positions_Employees" Type="Self.Positions_Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Positions">
+        <PropertyRef Name="Position_ID" />
+      </Principal>
+      <Dependent Role="Positions_Employees">
+        <PropertyRef Name="Position_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Rooms-Booking">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="Room_ID" />
+      </Principal>
+      <Dependent Role="Bookings">
+        <PropertyRef Name="Room_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище I11KravchenkoAAIDZv3ModelContainer">
+    <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareLogs" EntityType="Self.CareLogs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CareTypes" EntityType="Self.CareTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pets" EntityType="Self.Pets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Positions_Employees" EntityType="Self.Positions_Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="CareTypes_CareLogs" Association="Self.CareTypes_CareLogs">
+      <End Role="CareTypes" EntitySet="CareTypes" />
+      <End Role="CareLogs" EntitySet="CareLogs" />
+    </AssociationSet>
+    <AssociationSet Name="Clients_Pets" Association="Self.Clients_Pets">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Pets" EntitySet="Pets" />
+    </AssociationSet>
+    <AssociationSet Name="Clients-Payment" Association="Self.Clients-Payment">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="Employees_CareLogs" Association="Self.Employees_CareLogs">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="CareLogs" EntitySet="CareLogs" />
+    </AssociationSet>
+    <AssociationSet Name="Employees-Position_Employee" Association="Self.Employees-Position_Employee">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="Pets_CareLogs" Association="Self.Pets_CareLogs">
+      <End Role="Pets" EntitySet="Pets" />
+      <End Role="CareLogs" EntitySet="CareLogs" />
+    </AssociationSet>
+    <AssociationSet Name="Pets-Booking" Association="Self.Pets-Booking">
+      <End Role="Pets" EntitySet="Pets" />
+      <End Role="Bookings" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="Positions_CareTypes" Association="Self.Positions_CareTypes">
+      <End Role="Positions" EntitySet="Positions" />
+      <End Role="CareTypes" EntitySet="CareTypes" />
+    </AssociationSet>
+    <AssociationSet Name="Positions-Positions_Employee" Association="Self.Positions-Positions_Employee">
+      <End Role="Positions" EntitySet="Positions" />
+      <End Role="Positions_Employees" EntitySet="Positions_Employees" />
+    </AssociationSet>
+    <AssociationSet Name="Rooms-Booking" Association="Self.Rooms-Booking">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="Bookings" EntitySet="Bookings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,35 @@
+﻿@model idz.Models.ViewModels.PetDetails
+
+@{
+    ViewBag.Title = "PetDetails";
+}
+
+<h2>Детали для @Model.PetName</h2>
+
+<h3>Type: @Model.PetType</h3>
+
+@if (Model.CareServices.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Услуга</th>
+                <th>Описание</th>
+                <th>Работник оказавший услугу</th>
+                <th>Номер работника</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model.CareServices)
+            {
+                <tr>
+                    <td>@service.Name</td>
+                    <td>@service.Description</td>
+                    <td>@service.EmployeeSurname @service.EmployeeName @service.EmployeePatronymyc</td>
+                    <td>@service.EmployeeNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
